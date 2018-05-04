@@ -17,7 +17,7 @@ title: Data Compression SBE 628
 email: mohamed.m.i.abdallah@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   This page for Assignments related to Data Compression SBE 628
-baseurl: "/data-compression-sbe-628" # the subpath of your site, e.g. /blog
+baseurl: "/data-compression-sbe628" # the subpath of your site, e.g. /blog
 url: "https://m-abdallah.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: 
 github_username:  M-Abdallah
