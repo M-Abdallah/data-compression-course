@@ -1,52 +1,5 @@
+from  arithmaticUtilties import *
 import numpy as np
-from collections import Counter
-
-def seqCDF( sequence ):
-    """[summary]
-    
-    Arguments:
-        sequence {[str]} -- [description]
-    
-    Returns:
-        [numpy.array] -- [tuple items and frequency]
-    """
-    array = np.array(Counter(sequence).most_common())
-    # Finds the items in thee sequence
-    letter = array[:,0]
-    # Counts the frequency of the items in the sequence
-    counts = np.array(array[:,1], dtype=int)
-    # Cumulative density function
-    cdf = np.append(0,counts.cumsum())
-    
-    return letter, cdf
-
-# lowerEdit = lambda u , l, c, tC: int(l + np.floor( ( u - l +1 ) * c/tC ))
-# upperEdit = lambda u , l, c, tC: int(l + np.floor( ( u - l +1 ) * c/tC ) - 1)
-
-# luEdit = lambda u,l,c,cN,tC: (int(l + np.floor( ( u - l +1 ) * c/tC ))), (int(l + np.floor( ( u - l +1 ) * cN/tC ) - 1))
-def luEdit( u,l,c,cN,tC ):
-    """[summary]
-    
-    Arguments:
-        u {[integer]} -- [upper limit]
-        l {[integer]} -- [lower limit]
-        c {[integer]} -- [previous cumulative count]
-        cN {[integer]} -- [present cumulative count]
-        tC {[integer]} -- [total count]
-    
-    Returns:
-        [tuple] -- [new lower, new upper]
-    """
-
-    return (int(l + np.floor( ( u - l +1 ) * c/tC ))), (int(l + np.floor( ( u - l +1 ) * cN/tC ) - 1))
-    
-# lower and upper E1 scaling
-e1Edit = lambda u, l: ( int(u*2 +1) , int(l*2) )
-# lower and upper E2 scaling
-e2Edit = lambda u, l, scale: ( int( 2*u - scale + 1 ), int( 2*l - scale ) )
-# lower and upper E3 scaling
-e3Edit = lambda u, l, scale: ( int( 2*u - scale/2 +1 ), int( 2*l - scale/2 ) )
-
 
 class arrithmaticEncode:
     
@@ -56,13 +9,15 @@ class arrithmaticEncode:
         self.e3Count = 0
         self.code = []
         self.sequence = seq
-        # self.letters, self.cdf = seqCDF(self.sequence)
-        self.letters = np.array([ 'a','b','c' ])
-        self.cdf = np.array([0,40,41,50])
+        self.letters, self.cdf = seqCDF(self.sequence)
+        # self.letters = np.array([ 'a','b','c' ])
+        # self.cdf = np.array([0,40,41,50])
         # Total count
         self.totalC = self.cdf.max()
         # # of bits
         self.m = 2 + np.ceil( np.log2(self.totalC) )
+        self.uLimit = 2**self.m -1
+        self.lLimit = 0
         # Word size
         self.scale = 2**(self.m)
         
@@ -92,11 +47,11 @@ class arrithmaticEncode:
                 print(self.code)
                 # Change the limits ( Scaling) 
                 self.uLimit , self.lLimit = e2Edit( self.uLimit, self.lLimit, self.scale )                
-                print( self.lLimit, self.uLimit )
+                # print( self.lLimit, self.uLimit )
                 # Check for previous E3
                 while( self.e3Count > 0 ):
                     self.code.append(0)
-                    print(self.code)
+                    # print(self.code)
                     self.e3Count-=1
                 # Check again
                 scale123()
@@ -114,12 +69,10 @@ class arrithmaticEncode:
         
         for item in self.sequence:
             idx = list(self.letters).index(item)
-            print(item)
+            # print(item)
             print(self.cdf[idx], self.cdf[idx+1])
             # Change the limit based on the element
             self.lLimit, self.uLimit = luEdit( self.uLimit, self.lLimit, self.cdf[idx], self.cdf[idx+1], self.totalC )
-            # self.lLimit = lowerEdit( self.uLimit, self.lLimit, self.cdf[idx], self.totalC )
-            # self.uLimit = upperEdit( self.uLimit, self.lLimit, self.cdf[idx+1], self.totalC )
             print( self.lLimit, self.uLimit )
             # Check for scaling
             scale123()
@@ -130,12 +83,13 @@ class arrithmaticEncode:
         # Check if the E3 count is more than 0, to send E3Count*ones
         while (self.e3Count > 0):
             self.code.append(1)
-            print(self.code)
+            # print(self.code)
             self.e3Count-=1
         
         print(self.lLimit)
         # Send the rest of the lower limit
-        for i in list(np.unpackbits( np.array([self.lLimit], dtype=np.uint8) )): self.code.append(i)
+        for i in list(np.unpackbits( np.array([self.lLimit], dtype=np.uint8) ))[1:]: 
+            self.code.append(i)
         print(self.code)
         
         return( self.code )
