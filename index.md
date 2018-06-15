@@ -19,9 +19,11 @@ Please refer to [Assignment problems]({{ site.baseurl }}{% link Ref/Data-Compres
 
 [Chapter 3]({{ site.baseurl }}{% link problems/chapter3.md%}){:target="_blank"}
 
-[Chapter 4]({{ site.baseurl }}{% link problems/chapter3.md%}){:target="_blank"}
+[Chapter 4]({{ site.baseurl }}{% link problems/chapter4.md%}){:target="_blank"}
 
-[Chapter 5]({{ site.baseurl }}{% link problems/chapter3.md%}){:target="_blank"}
+[Chapter 5]({{ site.baseurl }}{% link problems/chapter5.md%}){:target="_blank"}
+
+[Chapter 6]({{ site.baseurl }}{% link problems/chapter6.md%}){:target="_blank"}
 
 ## Presentation
 
@@ -29,3 +31,15 @@ Please refer to [Assignment problems]({{ site.baseurl }}{% link Ref/Data-Compres
 > References
 > - [IEEEXplore](https://ieeexplore.ieee.org/document/6031913/){:target="_blank"}
 > - [PDF]({{ site.baseurl }}{% link Ref/zhu2011.pdf%}){:target="_blank"}
+
+## Arithmetic Implementation
+
+[Main Repository](https://github.com/M-Abdallah/data-compression-sbe628){:target="_blank"}
+
+[Arithmetic Encoder](https://github.com/M-Abdallah/data-compression-sbe628/blob/master/arithmaticEncoder.py){:target="_blank"}
+
+[Arithmetic Decoder](https://github.com/M-Abdallah/data-compression-sbe628/blob/master/arithmaticDecoder.py){:target="_blank"}
+
+[Arithmetic Utilities](https://github.com/M-Abdallah/data-compression-sbe628/blob/master/arithmaticUtilties.py){:target="_blank"}
+
+[Main file](https://github.com/M-Abdallah/data-compression-sbe628/blob/master/main.py){:target="_blank"}
